@@ -2,7 +2,6 @@ var HEART = 1;
 var LIKE = 2;
 
 function render_new_comments(el, comments) {
-
   var html = Object.keys(comments).map(function(key) {
     var comment = comments[key];
 
@@ -22,7 +21,6 @@ function render_new_comments(el, comments) {
       like = comment.comments_votes.filter(function(vote) {
         return vote.vote_type == LIKE ? true : false;
       })
-  
     }
     _html += hearts.length + ' <i class="fas fa-heart" style="color: red;"></i>'
     _html += like.length + '<i class="fas fa-thumbs-up" style="color: blue;"></i> <br> '
@@ -32,9 +30,11 @@ function render_new_comments(el, comments) {
     _html += '</li>'
     return _html;
   });
-
   $(el).html(html.join(''));
 }
+
+
+
 
 
 $(document).ready(function() {
