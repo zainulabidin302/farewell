@@ -1,4 +1,17 @@
 <?php include("util.php"); ?>
+<?php 
+    $query = "select * from `user`";
+    $users = query_to_array($query);
+
+    function get_comments($user) {
+        $query = "select * from `comments` 
+                    left join user on user.id = comments.by_user_id
+                    where to_user_id = {$user['id']}";
+        return query_to_array($query);
+    }
+
+
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,73 +20,72 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/diary.css">
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+
 </head>
 <body>
     <div class="main">
     <?php include("include.php"); ?>
 
-    <div class="card-container">
-        <?php 
-        $query = "select * from `user`";
-        $users = query_to_array($query);
+    <div class="row"></div>
+    <div class="clearfix"></div>
+    <div class="container">
+<div class="row">        <?php foreach ($users as $user) : ?>
 
+            <div class="col-xs-1 col-sm-1 col-md-6 col-lg-4" style="margin-top: 10px;">
+                <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="images/14024020016.jpg" alt="Card image cap">
+                        <div class="card-body">
+                                    <h5 class="card-title"><?php echo $user['name']; ?></h5>
+                                    <p class="card-text"><?php echo $user['email']; ?></p>
+                                    <i class="fas fa-heart fa-2x" style="color: red;"></i>
+                                    <i class="far fa-heart fa-2x"></i>
 
-        foreach ($users as $user) : ?>
-        
-            <div class="card">
-                <div class="status">
-                    public
-                </div>
+                                    <i class="fas fa-thumbs-up fa-2x" style="color: blue;"></i>
+                                    <i class="far fa-thumbs-up fa-2x"></i>
+                                </div>
+                            <ul class="list-group">
+                                
+                                <?php foreach(get_comments($user) as $comment): ?>
+                                    <li class="list-group-item"><?php echo $comment['comment'] ?> <span class="badge badge-primary badge-pill pull-right"><?php echo $comment['name'] ?></span> 
+                                    <!--user icon in two different styles-->
+                                    <i class="fas fa-heart" style="color: red;"></i>
+                                    <i class="far fa-heart"></i>
 
-                <div class="icons"></div>
-
-                <div class="image-div">
-                    <img src="images/14024020016.jpg" alt="">
-                </div>
-
-                <div class="name-div">
-                    <h3><?php echo $user['name']; ?></h3>
-                </div>
-                <div class="email-div">
-                    <h4><?php echo $user['email']; ?></h4>
-                </div>
-                <div class="form-div">
-                    <form action="">
-                    <input type="text">
-                    <input type="submit" value="comment">
-                    </form>
-                </div>
-                <div class="button" id="button1">
-                    <a href="#">Message</a>
-                </div>
-                <div class="button">
-                    <a href="#">Call</a>
-                </div>
-                <div class="comments-container">        
-                    <?php 
-                    $query = "select * from `comments` left join user on comments.by_user_id = user.id WHERE to_user_id = {$user['id']} order by date desc";
-                    $comments = query_to_array($query);
-                    foreach($comments as $comment): ?>
-                    
-                        <div class="comment">
-                            <?php echo $comment['name'] ?>: <?php echo $comment['comment'] ?> 
-                            <button >Love it</button>
-                            <button >Like it</button>
+                                    <i class="fas fa-thumbs-up" style="color: blue;"></i>
+                                    <i class="far fa-thumbs-up"></i>
+  
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
-
-                    <?php endforeach; ?>
-                    
-
-                </div>
         </div>
 
-        <?php endforeach; ?>
-        </div>
-        <div class="clearfix"></div>
-        
-        
-        <?php include("footer.php"); ?>
+    
+
+            <?php endforeach; ?>
+        </div></div>
+       
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    <?php include("footer.php"); ?>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     </div>
 </body>
 </html>

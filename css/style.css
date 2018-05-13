@@ -1,8 +1,10 @@
 *, *:before, *:after {
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
 }
-
+body {
+  font-family: 'Roboto', sans-serif;
+  
+}
 header {
     width: 100%;
     padding: 30px;
@@ -115,10 +117,6 @@ header a {
   text-align: center;
 }
 
-.card{
-    width: 33%;
-    float: left;
-}
 
 
 
