@@ -1,5 +1,4 @@
 <header>
-
     <div>
         <a href="#">Search</a>
         <a href="#">Diary</a>
