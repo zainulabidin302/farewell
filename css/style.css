@@ -24,8 +24,10 @@ header div {
 body{
   margin: 0px;
   padding: 0px;
-  background: url("../images/background.jpg") no-repeat ;
+  background: url("../images/background.jpg") ;
   background-size: cover;
+  background-attachment: fixed;
+  
 }
 #result{
   padding: 0px;
@@ -71,7 +73,7 @@ body{
 
 .main {
   background-color: rgba(4,126,196,0.8);
-  height: 800px;
+  min-height: 1600px;
 }
 article{
     margin: 0;

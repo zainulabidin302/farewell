@@ -1,4 +1,4 @@
-<?php include("util.php"); ?>
+<?php include('lib.php'); ?>
 <?php 
     $query = "select * from `user`";
     $users = query_to_array($query);
@@ -33,7 +33,7 @@
     <div class="row"></div>
     <div class="clearfix"></div>
     <div class="container">
-<div class="row">        <?php foreach ($users as $user) : ?>
+<div class="row">        <?php $comments = []; foreach ($users as $user) : ?>
 
             <div class="col-xs-1 col-sm-1 col-md-6 col-lg-4" style="margin-top: 10px;">
                 <div class="card" style="width: 18rem;">
@@ -68,17 +68,7 @@
                             <ul class="list-group">
                                 
                                 
-                                <?php foreach(get_comments($user) as $comment): ?>
-                                    <li class="list-group-item"><?php echo $comment['comment'] ?> <span class="badge badge-primary badge-pill pull-right"><?php echo $comment['name'] ?></span> 
-                                    <!--user icon in two different styles-->
-                                    <i class="fas fa-heart" style="color: red;"></i>
-                                    <i class="far fa-heart"></i>
-
-                                    <i class="fas fa-thumbs-up" style="color: blue;"></i>
-                                    <i class="far fa-thumbs-up"></i>
-  
-                                    </li>
-                                <?php endforeach; ?>
+                                <?php $comments[] = get_comments_to_user_id(true, $user['id']); ?>
                             </ul>
                         </div>
         </div>
@@ -89,7 +79,7 @@
         </div></div>
        
 
-    
+
 
 
 
@@ -105,9 +95,13 @@
     <?php include("footer.php"); ?>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script type="text/javascript" >
+        var GLOBAL_COMMENTS_DATA_DIARY_PHP = <?php echo json_encode($comments); ?>;
+    </script>
     <script src="js/init.js" type="text/javascript"></script>
     <script src="js/login.js" type="text/javascript"></script>  
     <script src="js/diary.js" type="text/javascript"></script>    
+
 </div>
 </body>
 </html>

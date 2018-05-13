@@ -17,6 +17,7 @@ function result_template_generator(user) {
 
 
 $(document).ready(function() {
+  
   $('#search').on('keyup', function() {
     var url = API_URL + '?api_req=get_users&q=' + $(this).val();
 
