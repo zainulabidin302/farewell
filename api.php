@@ -3,21 +3,60 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
 
 include('util.php');
+require('PHPMailer.php');
 
 
 $api_map = array(
     'get_users' => 'get_users', // input: q
-
     'add_comment' => 'add_comment', // comment, user_id
     'get_comments_to_user_id' => 'get_comments_to_user_id', // user_id
-    'add_vote_user' => 'add_vote_user' // to_user_id, by_user_id, vote_level, vote_type
+    'add_vote_user' => 'add_vote_user', // to_user_id, by_user_id, vote_level, vote_type
+    'activate_email' => 'activate_email'
 );
 
 
-
-
+use PHPMailer\PHPMailer\PHPMailer;
 
 $api_map[$_GET['api_req']]();
+
+
+function activate_email() {
+    global $BASE_URL;
+
+    $email = $_GET['email'] ;
+    if (empty($email)) {
+        echo json_encode('error');
+        return;
+    }
+    $mail = new PHPMailer;
+    $mail->isSMTP();
+    $mail->SMTPDebug = 0;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 25;
+    $mail->SMTPAuth = true;
+    $mail->Username = 'ahmedaliumtian@gmail.com';
+    $mail->Password = 'account?service=mail&continu';
+    $mail->setFrom('umtian@umt.edu.pk', 'UMTIAN');
+    $mail->addReplyTo('no-reply@email.com', 'UMTIAN');
+    $mail->addAddress($email, 'UMT User');
+    $mail->Subject = 'Login Activation Link | Sent from Farewell Diaries';
+    $html = "<h3>Please click on the following link to login directly.</h3>";
+    $hash = md5(generatePIN());
+    $html .= "<a href='{$BASE_URL}activate.php?activation_hash={$hash}' style='width: 120px; height: 60px; background-color: #4442213; border-color: 1px solid white; border-radius: 10;'>Login</a>";
+
+    $mail->msgHTML($html);
+    $mail->AltBody = $html;
+
+    $query = "update user set activation_hash = '{$hash}' where email = '{$email}'";
+    $q = mysqli_query(get_connection(), $query);
+
+    if (!$mail->send()) {
+        echo json_encode(array('error' => $mail->ErrorInfo));
+    } else {
+        echo json_encode(array('done' => 'ok'));
+    }
+
+}
 
 function get_users() {
     $q = $_GET['q'];
@@ -33,11 +72,14 @@ function get_users() {
 
 function get_comments_to_user_id() {
     $user_id = $_GET['user_id'];
+
     if (empty($user_id)) {
         echo json_encode("user_id is empty");
         return;
     }
-    $query = "select * from `comments` WHERE to_user_id order by date desc";
+    $query = "select * from `comments` 
+    left join user on user.id = comments.by_user_id
+    where comments.to_user_id = {$user_id} order by date desc";
     echo json_encode(query_to_array($query));
     return;
 }

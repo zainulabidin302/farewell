@@ -1,5 +1,5 @@
-var API_URL = 'http://192.168.10.25/FarewellDir/api.php';
-var IMAGE_URL = 'http://192.168.10.25/FarewellDir/images';
+var API_URL = 'http://localhost/FarewellDir/api.php';
+var IMAGE_URL = 'http://localhost/FarewellDir/images';
 
 function result_template_generator(user) {
 
@@ -35,5 +35,7 @@ $(document).ready(function() {
     })
 
 
-  })
+  });
 })
+
+

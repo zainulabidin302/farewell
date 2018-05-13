@@ -1,3 +1,4 @@
+<?php include ('util.php'); ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,10 +7,12 @@
     <title>Farewell Diaries</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 </head>
 <body >
   <div class="main">
+
       <?php include("include.php")?>
         <div class="clearfix"></div>
 
@@ -32,6 +35,7 @@
         <?php include("footer.php"); ?>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="js/init.js" ></script>
+    <script type="text/javascript" src="js/init.js" ></script>
+    <script type="text/javascript" src="js/login.js"></script>
 </body>
 </html>

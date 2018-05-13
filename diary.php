@@ -6,7 +6,7 @@
     function get_comments($user) {
         $query = "select * from `comments` 
                     left join user on user.id = comments.by_user_id
-                    where to_user_id = {$user['id']}";
+                    where to_user_id = {$user['id']} order by date desc";
         return query_to_array($query);
     }
 
@@ -48,17 +48,26 @@
                                     <i class="fas fa-thumbs-up fa-2x" style="color: blue;"></i>
                                     <i class="far fa-thumbs-up fa-2x"></i>
                                 </div>
+                                <?php if ($CURRENT_USER != null): ?>
+                                <form action="" style="display: inline;">   
+                                    
+                                    <div class="input-group">
+                                    <input type="text"  name="comment" class="form-control" aria-label="Text input with segmented dropdown button">
+                                    <input type="hidden" name="to_user_id" value="<?php echo $user['id']; ?>" >     
+                                    <input type="hidden" name="by_user_id" value="<?php echo $CURRENT_USER['id']; ?>" >     
+                                    <div class="input-group-append">
+                                            <input type="submit" 
+                                                class="btn btn-outline-secondary add-comment" 
+                                            value="Comment">
+                                    </div>
+                                    
+                                    </div>
+                                    </form>
+                                    <?php endif; ?>
+                            
                             <ul class="list-group">
-                                <li class=""> 
-                                                                    
-                                <div class="input-group">
-                                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary">Comment</button>
-                                </div>
-                                </div>
-
-                                </li>
+                                
+                                
                                 <?php foreach(get_comments($user) as $comment): ?>
                                     <li class="list-group-item"><?php echo $comment['comment'] ?> <span class="badge badge-primary badge-pill pull-right"><?php echo $comment['name'] ?></span> 
                                     <!--user icon in two different styles-->
@@ -96,6 +105,9 @@
     <?php include("footer.php"); ?>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    </div>
+    <script src="js/init.js" type="text/javascript"></script>
+    <script src="js/login.js" type="text/javascript"></script>  
+    <script src="js/diary.js" type="text/javascript"></script>    
+</div>
 </body>
 </html>
