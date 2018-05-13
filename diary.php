@@ -41,6 +41,7 @@
                         <div class="card-body">
                                     <h5 class="card-title"><?php echo $user['name']; ?></h5>
                                     <p class="card-text"><?php echo $user['email']; ?></p>
+
                                     <i class="fas fa-heart fa-2x" style="color: red;"></i>
                                     <i class="far fa-heart fa-2x"></i>
 
@@ -48,7 +49,16 @@
                                     <i class="far fa-thumbs-up fa-2x"></i>
                                 </div>
                             <ul class="list-group">
-                                
+                                <li class=""> 
+                                                                    
+                                <div class="input-group">
+                                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary">Comment</button>
+                                </div>
+                                </div>
+
+                                </li>
                                 <?php foreach(get_comments($user) as $comment): ?>
                                     <li class="list-group-item"><?php echo $comment['comment'] ?> <span class="badge badge-primary badge-pill pull-right"><?php echo $comment['name'] ?></span> 
                                     <!--user icon in two different styles-->
