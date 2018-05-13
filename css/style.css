@@ -1,0 +1,16 @@
+header {
+    width: 100%;
+    background: red;
+}
+article{
+    width: 100%;
+    background: blueviolet;
+}
+
+.login-box{
+    display: none;
+}
+.card{
+    width: 33%;
+    float: left;
+}
