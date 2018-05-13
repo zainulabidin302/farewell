@@ -1,0 +1,78 @@
+.card .image-div{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.card .status{
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  width: 30%;
+  text-align: center;
+  border-bottom-right-radius: 10px;
+}
+
+.card{
+  margin: 10px;
+  color: white;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#959595+0,383838+50,1b1b1b+100 */
+background: rgb(149,149,149); /* Old browsers */
+background: -moz-linear-gradient(-45deg, rgba(149,149,149,1) 0%, rgba(56,56,56,1) 50%, rgba(27,27,27,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, rgba(149,149,149,1) 0%,rgba(56,56,56,1) 50%,rgba(27,27,27,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, rgba(149,149,149,1) 0%,rgba(56,56,56,1) 50%,rgba(27,27,27,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+-webkit-box-shadow: 10px 13px 33px -1px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 13px 33px -1px rgba(0,0,0,0.75);
+box-shadow: 10px 13px 33px -1px rgba(0,0,0,0.75);
+}
+.card .image-div img{
+  width: 80px;
+  margin: 5px;
+  border-radius: 50%;
+  height: 80px;
+}
+
+.card .name-div{
+  text-align: center;
+}
+.card .email-div{
+  text-align: center;
+}
+
+.card .button{
+  width: 50%;
+  float: left;
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+}
+
+#button1{
+  border-right: 1px solid white;
+}
+.card .form-div{
+  text-align: center;
+}
+
+/* visited link */
+.card a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+/* mouse over link */
+.card a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+/* selected link */
+.card a:active {
+  text-decoration: none;
+  color: white;
+}
+
+/* unvisited link */
+.card a:link {
+  text-decoration: none;
+  color: white;
+}

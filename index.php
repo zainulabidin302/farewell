@@ -9,19 +9,8 @@
 
 </head>
 <body >
-    <div class="main">
-        <header>
-
-            <div>
-                <a href="#">Search</a>
-                <a href="#">Diary</a>
-            </div>
-
-            <div class="right-align" >
-            <a href="#">Login</a>
-
-            </div>
-        </header>
+  <div class="main">
+      <?php include("include.php")?>
         <div class="clearfix"></div>
 
         <article>
@@ -32,11 +21,15 @@
                     <input id="search" type="text" placeholder="Enter a Name or Email (e.g Abdullah or 140240xxxxx@umt.edu.pk)">
                 </form>
             </div>
-            <div>
-                <img src="" alt="">
-                <p>Name</p>
+
+
+            <div id="result">
             </div>
+
+
+
         </article>
+        <?php include("footer.php"); ?>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="js/init.js" ></script>
