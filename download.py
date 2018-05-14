@@ -1,7 +1,7 @@
 import urllib
 import json
 import urllib.request
-val = 14024020050
+val = 14024020001
 for i in range(1,50):
     html = urllib.request.urlopen("http://picasaweb.google.com/data/entry/api/user/"+str(val)+"@umt.edu.pk?alt=json")
     html = html.read().decode("utf-8")
