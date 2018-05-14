@@ -62,9 +62,7 @@ $user['votes'] = $tmp['votes'];
                         <div class="card-body">
                                     <h5 class="card-title"><?php echo $user['name']; ?></h5>
                                     <p class="card-text"><?php echo $user['email']; ?></p>
-                                    <?php if ($CURRENT_USER != null): ?>
-                                        <!-- <i class="fas fa-heart fa-2x" style="color: red;"></i> -->
-                                        <?php 
+                                    <?php 
                                             $heart_class = 'far';
                                             $like_class = 'far';
                                             
@@ -86,6 +84,9 @@ $user['votes'] = $tmp['votes'];
                                                 } 
                                             }
                                         ?>
+                                    <?php if ($CURRENT_USER != null): ?>
+                                        <!-- <i class="fas fa-heart fa-2x" style="color: red;"></i> -->
+                                       
                                         <i class="<?php echo $heart_class ?> fa-heart fa-2x add_user_vote" data-to-user-id="<?php echo $user['id']; ?>" data-by-user-id="<?php echo $CURRENT_USER['id']; ?>"  data-type="<?php echo HEART; ?>"></i>
 
                                         <!-- <i class="fas fa-thumbs-up fa-2x" style="color: blue;"></i> -->
@@ -93,8 +94,11 @@ $user['votes'] = $tmp['votes'];
                                     <?php endif; ?>
                                     <i class="heart-count"><?php echo $total_hearts ?></i> <i class="fas fa-heart" style="color: red;"></i> | <i class="like-count"><?php echo $total_likes ?></i> <i class="fas fa-thumbs-up" style="color: blue;"></i> 
                                 </div>
-                                <?php if ($CURRENT_USER != null): ?>
-                                <form action="" style="display: inline;">   
+                                <?php $form_display = 'inline'; if ($CURRENT_USER == null): 
+                                    ?><div class="alert alert-warning">Login to Comment and like and love.</div><?php
+                                    $form_diplay = 'none'; 
+                                endif?>
+                                <form action="" style="display: <?php echo $form_diplay ?>;">   
                                     
                                     <div class="input-group">
                                     <input type="text"  name="comment" class="form-control" aria-label="Text input with segmented dropdown button">
@@ -108,7 +112,7 @@ $user['votes'] = $tmp['votes'];
                                     
                                     </div>
                                     </form>
-                                    <?php endif; ?>
+                                   
                             
                             <ul class="list-group">
                                 

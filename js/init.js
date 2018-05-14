@@ -3,12 +3,12 @@ var IMAGE_URL = 'http://localhost/FarewellDir/images';
 
 function result_template_generator(user) {
 
-  var str = "<a href='diary.php?id=" + user.id + "' ><div class='result-row'>"
+var str = "<a href='diary.php?id=" + user.id + "'><div class='result-row'>"
   str += "<div class='result-row-left'>"
   str += "<img src=" + IMAGE_URL +'/'+ user.image_url + " />";
   str += "</div>"
   str += "<div class='result-row-right'>"
-  str += "<p>" + user.name + "</p>";
+  str += "<h3>" + user.name + "</h3>";
   str += "<p>" + user.email + "</p>";
   str += "</div> "
   str += "</div></a><div class='clearfix'></div>"

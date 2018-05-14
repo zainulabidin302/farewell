@@ -22,12 +22,15 @@ function activate_email() {
     $mail->setFrom('umtian@umt.edu.pk', 'UMTIAN');
     $mail->addReplyTo('no-reply@email.com', 'UMTIAN');
     $mail->addAddress($email, 'UMT User');
-    $mail->Subject = 'Login Activation Link | Sent from Farewell Diaries';
-    $html = "<h3>Please click on the following link to login directly.</h3>";
+    $mail->Subject = 'Farewell Diaries | Login to your account here';
     $hash = md5(generatePIN());
-    $html .= "<a href='{$BASE_URL}activate.php?activation_hash={$hash}' style='width: 120px; height: 60px; background-color: #4442213; border-color: 1px solid white; border-radius: 10;'>Login</a>";
+    $link = "{$BASE_URL}activate.php?activation_hash={$hash}";
+    $str = file_get_contents('email-template/newsletter.html');
+    $html = str_replace("CHANGE_URL_HERE", $link, $str); 
 
-    $mail->msgHTML($html);
+    $mail->msgHTML($html, __DIR__);
+
+    // $mail->msgHTML($html);
     $mail->AltBody = $html;
 
     $query = "update user set activation_hash = '{$hash}' where email = '{$email}'";
