@@ -95,32 +95,32 @@ function add_vote_user() {
     $by_user_id = $_GET['by_user_id'];
     $to_user_id = $_GET['to_user_id'];
     $vote_type  = $_GET['vote_type'];
-    $vote_level  = $_GET['vote_level'];
+    $vote_level  = 1;
     
     if (empty($vote_level) || empty($vote_type) || empty($by_user_id) || empty($to_user_id)) {
         echo json_encode(" empty value recieved ");
         return ;
     }
 
-    $sql = "select * from user_vote where by_user_id = {$by_user_id} && to_user_id = {$to_user_id}";
+    $sql = "select * from user_vote where by_user_id = {$by_user_id} and to_user_id = {$to_user_id} and vote_type = {$vote_type}";
     $data = query_to_array($sql);
     
     if (count($data) > 0) {
         $id = $data[0]['id'];
-
-        $update_sql = "update user_vote set vote_type = {$vote_type} , vote_level = ${vote_level} where id = {$id}";
+        $lev = $data[0]['vote_level'] == 1 ? 0 : 1;
+        
+        $update_sql = "update user_vote set vote_type = {$vote_type} , vote_level = ${lev} where id = {$id}";
         $res = mysqli_query(get_connection(), $update_sql);
         if ($res) {
-            echo json_encode('updated');
+            echo json_encode(['new_level' => $lev]);
         } else {
             echo json_encode('error updating');
         }
     } else {
         $insert_sql = "insert into user_vote (by_user_id, to_user_id, vote_type, vote_level) values({$by_user_id}, {$to_user_id}, {$vote_type}, {$vote_level} )";
-        echo $insert_sql;
         $res = mysqli_query(get_connection(), $insert_sql);
         if ($res) {
-            echo json_encode('inserted');
+            echo json_encode(['new_level' => $vote_level]);
         } else {
             echo json_encode('error inserting');
         }

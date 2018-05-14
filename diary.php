@@ -1,12 +1,25 @@
 <?php include('lib.php'); ?>
 <?php 
-    $query = "select * from `user`";
-    $users = query_to_array($query);
+define('HEART', 1);
+define('LIKE', 2);
 
+    $query = "SELECT user.*, user_vote.by_user_id, user_vote.vote_level, user_vote.vote_type FROM `user` LEFT JOIN user_vote ON user.id = user_vote.to_user_id";
+    $users = query_to_array($query);
+    $new_users = [];
+    foreach ($users as $user ) {
+        $new_users[$user['id']]['user']  = $user;
+        $new_users[$user['id']]['votes'][] = array('by_user_id' => $user['by_user_id'], 
+                                            'vote_level' => $user['vote_level'],
+                                            'vote_type' => $user['vote_type']) ;
+    }
+    
     function get_comments($user) {
+        
         $query = "select * from `comments` 
-                    left join user on user.id = comments.by_user_id
-                    where to_user_id = {$user['id']} order by date desc";
+        left join user on user.id = comments.by_user_id
+        where to_user_id = {$user['id']} order by date desc";
+        
+
         return query_to_array($query);
     }
 
@@ -33,7 +46,11 @@
     <div class="row"></div>
     <div class="clearfix"></div>
     <div class="container">
-<div class="row">        <?php $comments = []; foreach ($users as $user) : ?>
+<div class="row">        <?php $comments = []; foreach ($new_users as $tmp) :
+$user = $tmp['user'];
+$user['votes'] = $tmp['votes'];
+ 
+        ?>
 
             <div class="col-xs-1 col-sm-1 col-md-6 col-lg-4" style="margin-top: 10px;">
                 <div class="card" style="width: 18rem;">
@@ -41,12 +58,36 @@
                         <div class="card-body">
                                     <h5 class="card-title"><?php echo $user['name']; ?></h5>
                                     <p class="card-text"><?php echo $user['email']; ?></p>
+                                    <?php if ($CURRENT_USER != null): ?>
+                                        <!-- <i class="fas fa-heart fa-2x" style="color: red;"></i> -->
+                                        <?php 
+                                            $heart_class = 'far';
+                                            $like_class = 'far';
+                                            
+                                            $total_likes = 0;
+                                            $total_hearts = 0;
 
-                                    <i class="fas fa-heart fa-2x" style="color: red;"></i>
-                                    <i class="far fa-heart fa-2x"></i>
+                                            foreach($user['votes'] as $vote) {
+                                                if ($vote['vote_type'] == HEART && $vote['vote_level'] == 1) $total_hearts++;
+                                                if ($vote['vote_type'] == LIKE && $vote['vote_level'] == 1) $total_likes++;
+                                                
+                                                if ($vote['by_user_id'] == $CURRENT_USER['id']) {
+                                                    if ($vote['vote_type'] == HEART && $vote['vote_level'] == 1) {
+                                                        $heart_class = 'fas';
+                                                        
+                                                    }
+                                                    if ($vote['vote_type'] == LIKE && $vote['vote_level'] == 1) {
+                                                        $like_class = 'fas';
+                                                    }
+                                                } 
+                                            }
+                                        ?>
+                                        <i class="<?php echo $heart_class ?> fa-heart fa-2x add_user_vote" data-to-user-id="<?php echo $user['id']; ?>" data-by-user-id="<?php echo $CURRENT_USER['id']; ?>"  data-type="<?php echo HEART; ?>"></i>
 
-                                    <i class="fas fa-thumbs-up fa-2x" style="color: blue;"></i>
-                                    <i class="far fa-thumbs-up fa-2x"></i>
+                                        <!-- <i class="fas fa-thumbs-up fa-2x" style="color: blue;"></i> -->
+                                        <i class="<?php echo $like_class ?> fa-thumbs-up fa-2x add_user_vote" data-to-user-id="<?php echo $user['id']; ?>" data-by-user-id="<?php echo $CURRENT_USER['id']; ?>"  data-type="<?php echo LIKE; ?>" ></i>
+                                    <?php endif; ?>
+                                    <i class="heart-count"><?php echo $total_hearts ?></i> <i class="fas fa-heart" style="color: red;"></i> | <i class="like-count"><?php echo $total_likes ?></i> <i class="fas fa-thumbs-up" style="color: blue;"></i> 
                                 </div>
                                 <?php if ($CURRENT_USER != null): ?>
                                 <form action="" style="display: inline;">   

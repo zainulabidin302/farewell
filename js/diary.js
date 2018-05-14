@@ -10,7 +10,7 @@ function render_new_comments(el, comments) {
     _html += comment['comment'] 
     _html += '<span class="badge badge-primary badge-pill pull-right">'
     _html += comment['name'] 
-    _html += '</span><br>'
+    _html += '</span>'
     var hearts = []
     var like   = []
     if (comment.comments_votes != null) {
@@ -22,11 +22,13 @@ function render_new_comments(el, comments) {
         return vote.vote_type == LIKE ? true : false;
       })
     }
-    _html += hearts.length + ' <i class="fas fa-heart" style="color: red;"></i>'
-    _html += like.length + '<i class="fas fa-thumbs-up" style="color: blue;"></i> <br> '
 
-    _html += '<i class="far fa-thumbs-up"></i>'
-    _html += '<i class="far fa-heart"></i>'
+    // _html += hearts.length + ' <i class="fas fa-heart" style="color: red;"></i>'
+    // _html += like.length + '<i class="fas fa-thumbs-up" style="color: blue;"></i>'
+
+    // _html += '<i class="far fa-thumbs-up"></i>'
+    // _html += '<i class="far fa-heart"></i>'
+    
     _html += '</li>'
     return _html;
   });
@@ -61,4 +63,36 @@ $(document).ready(function() {
     })
 
   })
- })
+
+  $('.add_user_vote').on('click', function() {
+    var to_user_id = $(this).data('to-user-id')
+    var by_user_id = $(this).data('by-user-id')
+    var vote_type = $(this).data('type')
+    var _el = $(this);
+    var i;
+    if (vote_type == HEART) {
+      i = _el.siblings('i.heart-count');
+    } else if (vote_type == LIKE) {
+      i = _el.siblings('i.like-count');
+    } else {
+      throw Error('Vote type undefined');
+    }
+
+    $.get(API_URL + '?api_req=add_vote_user&vote_type='+vote_type+'&to_user_id='+to_user_id+'&by_user_id='+by_user_id, function(data) {
+      var d = JSON.parse(data);
+      console.log(d);
+
+      if (d.new_level == 1) {
+        _el.addClass('fas');
+        _el.removeClass('far');
+        i.html(parseInt(i.html()) + 1)
+      } else {
+        _el.addClass('far hello');
+        _el.removeClass('fas');
+        i.html(parseInt(i.html()) - 1)
+      }
+    })
+
+  });
+
+})
