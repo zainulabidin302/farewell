@@ -3,7 +3,11 @@
 define('HEART', 1);
 define('LIKE', 2);
 
-    $query = "SELECT user.*, user_vote.by_user_id, user_vote.vote_level, user_vote.vote_type FROM `user` LEFT JOIN user_vote ON user.id = user_vote.to_user_id";
+    $query = "SELECT user.*, user_vote.by_user_id, user_vote.vote_level, user_vote.vote_type FROM `user` LEFT JOIN user_vote ON user.id = user_vote.to_user_id ";
+    if (isset($_GET['id']))
+    {
+        $query .= " WHERE user.id = {$_GET['id']}";
+    }
     $users = query_to_array($query);
     $new_users = [];
     foreach ($users as $user ) {

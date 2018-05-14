@@ -1,6 +1,6 @@
 <header>
     <div>
-        <a href="#">Search</a>
+        <a href="index.php">Search</a>
         <a href="diary.php">Diary</a>
     </div>
 
